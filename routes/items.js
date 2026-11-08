@@ -20,15 +20,17 @@ router.post("/", async (req, res) => {
   try {
     let result;
 
-    if (req.body.item_name && req.body.price !== undefined) {
-      result = await pool.query(
-        "INSERT INTO items (item_name, price) VALUES ($1, $2)",
-        [req.body.item_name, req.body.price],
-      );
-    } else if (req.body.item_name) {
-      result = await pool.query("INSERT INTO items (item_name) VALUES ($1)", [
-        req.body.item_name,
-      ]);
+    if (req.body.item_name && req.body.item_name.trim() !== "") {
+      if (req.body.price !== undefined) {
+        result = await pool.query(
+          "INSERT INTO items (item_name, price) VALUES ($1, $2)",
+          [req.body.item_name, req.body.price],
+        );
+      } else {
+        result = await pool.query("INSERT INTO items (item_name) VALUES ($1)", [
+          req.body.item_name,
+        ]);
+      }
     } else {
       return res.status(400).json({
         message: "Invalid item data",
