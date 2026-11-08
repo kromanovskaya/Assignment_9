@@ -1,4 +1,5 @@
 // Connecting database
+require("dotenv").config();
 const Pool = require("pg").Pool;
 
 const pool = new Pool({
