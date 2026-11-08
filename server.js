@@ -1,19 +1,17 @@
-const express = require('express')
-const app = express()
+const express = require("express");
+const app = express();
 
-app.use(express.json())
-app.use(logger)
+app.use(express.json());
+app.use(logger);
 
 // Custom log-catcher middleware
 function logger(req, res, next) {
-    console.log(new Date().toISOString(), 
-                req.method,
-                req.originalUrl)
-    next()
+  console.log(new Date().toISOString(), req.method, req.originalUrl);
+  next();
 }
 
-const resourseRouter = require("./routes/resources")
+const itemRouter = require("./routes/items");
 
-app.use("/api/resources", resourseRouter)
+app.use("/api/items", itemRouter);
 
-app.listen(3000)
+app.listen(3000);
